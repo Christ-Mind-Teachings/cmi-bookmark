@@ -22,6 +22,7 @@
 const AWS = require("aws-sdk");
 const isEqual = require("lodash/isEqual");
 const findIndex = require("lodash/findIndex");
+const getKeyRange = require("./key");
 
 let table = "bookmarks";
 let dbInitialized = false;
@@ -289,13 +290,20 @@ function deleteAnnotation(userId, bookmarkId, annotationId) {
 /*
  * query
  *
- * Get all bookmarks for the specified user and page
+ * Get all bookmarks for the specified user and id.
+ *
+ * args:
+ *  userId: md5 of email address
+ *  key: can specify a complete or partial pageKey but must specify
+ *      the sourceId at the minimum (2 digits)
  */
-function query(userId, pageId) {
+function query(userId, key) {
   return new Promise((resolve, reject) => {
-    if (typeof pageId === "string") {
-      pageId = parseFloat(pageId);
+    if (typeof key === "string") {
+      key = parseFloat(key);
     }
+
+    let keyRange = getKeyRange(key);
 
     //query parms
     let queryParams = {
@@ -303,8 +311,8 @@ function query(userId, pageId) {
       KeyConditionExpression: "userId = :address and bookmarkId BETWEEN :start AND :end",
       ExpressionAttributeValues: {
         ":address": userId,
-        ":start": pageId,
-        ":end": pageId + 0.999
+        ":start": keyRange.startValue,
+        ":end": keyRange.endValue
       }
     };
 
@@ -313,7 +321,11 @@ function query(userId, pageId) {
         reject(err);
       }
       else {
-        resolve(data);
+        //remove userId from result
+        let bookmarks = data.Items.map((b) => {
+          return {id: b.bookmarkId, bookmark: b.bookmark};
+        });
+        resolve(bookmarks);
       }
     });
   });
@@ -357,7 +369,7 @@ module.exports = {
   deleteAnnotation: deleteAnnotation,
   getBookmark: getBookmark,
   deleteBookmark: deleteBookmark,
-  queryBookmarks: query
+  query: query
 };
 
 

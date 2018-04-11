@@ -23,7 +23,8 @@
     "eslint": "^3.19.0"
   },
   "dependencies": {
-    "claudia-api-builder": "^2.4.1"
+    "claudia-api-builder": "^2.4.1",
+    "lodash": "^4.17.5"
   },
   "optionalDependencies": {
     "aws-sdk": "^2.35.0"

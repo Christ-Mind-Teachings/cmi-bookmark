@@ -111,10 +111,13 @@ api.get("/bookmark/{uid}/{bid}", function(request) {
     });
 });
 
-//query bookmark for page
-api.get("/bookmark/query/{uid}/{pid}", function(request) {
+/*
+ * query bookmarks for complete or partial pageKey. This can query
+ * bookmarks by page, book, or source
+ */
+api.get("/bookmark/query/{uid}/{key}", function(request) {
   let userId = request.pathParams.uid;
-  let pageId = request.pathParams.pid;
+  let queryKey = request.pathParams.key;
 
   var result = {
     message: "OK"
@@ -122,7 +125,7 @@ api.get("/bookmark/query/{uid}/{pid}", function(request) {
 
   db.initialize(false);
 
-  return db.queryBookmarks(userId, pageId)
+  return db.query(userId, queryKey)
     .then((response) => {
       result.response = response;
       return result;
