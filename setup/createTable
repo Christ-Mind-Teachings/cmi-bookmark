@@ -1,0 +1,71 @@
+#!/usr/bin/env node
+
+var AWS = require("aws-sdk");
+var program = require("commander");
+
+var local = "http://localhost:8000";
+var remote = "https://dynamodb.us-east-1.amazonaws.com";
+
+var awsConfig = {
+  region: "us-east-1"
+};
+
+program
+  .version('0.0.1')
+  .option('-e, --endpoint <dblocation>', "Db location, either local or remote")
+  .option('-s, --sid <sourceId>', "Source Id: WOM = 10")
+  .parse(process.argv);
+
+if (!program.endpoint) {
+  console.log("specify endpoint of either '-e local' or '-e remote'");
+  process.exit(1);
+}
+
+if (!program.sid) {
+  console.log("specify sourceId as -s <sourceId>, eg: -s 10 for WOM");
+  process.exit(1);
+}
+
+var table = `bookmarks${program.sid}`;
+
+if (program.endpoint === "remote") {
+  awsConfig.endpoint = remote;
+}
+else {
+  awsConfig.endpoint = local;
+}
+
+AWS.config.update(awsConfig);
+
+var dynamodb = new AWS.DynamoDB();
+
+/*
+ * bookmarkId: pageKey + pId
+ *
+ * formatted as a number
+ */
+
+var params = {
+  TableName : table,
+    KeySchema: [
+        { AttributeName: "userId", KeyType: "HASH" },
+        { AttributeName: "bookmarkId", KeyType: "RANGE" }
+    ],
+    AttributeDefinitions: [
+        { AttributeName: "userId", AttributeType: "S" },
+        { AttributeName: "bookmarkId", AttributeType: "N" }
+    ],
+    ProvisionedThroughput: {
+        ReadCapacityUnits: 10,
+        WriteCapacityUnits: 5
+    }
+};
+
+dynamodb.createTable(params, function(err, data) {
+    if (err) {
+        console.error("Unable to create table: %s. Error JSON:", table, JSON.stringify(err, null, 2));
+    } else {
+        console.log("Created table: %s. Table description JSON:", table, JSON.stringify(data, null, 2));
+    }
+});
+

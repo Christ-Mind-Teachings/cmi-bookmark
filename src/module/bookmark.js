@@ -24,7 +24,7 @@ const isEqual = require("lodash/isEqual");
 const findIndex = require("lodash/findIndex");
 const getKeyRange = require("./key");
 
-let table = "bookmarks";
+let baseTableName = "bookmarks";
 let dbInitialized = false;
 let db;
 
@@ -55,6 +55,20 @@ function initDB(dev = false, endpoint = "local") {
     dbInitialized = true;
   }
 }
+
+/*
+ * Bookmarks are stored in source specific tables. Table are named
+ * "bookmarks<sourceId>". This function extracts the sourceId from
+ * the bookmarkId (bid) and returns the table name.
+ */
+function getTableName(bid) {
+  if (typeof bid !== "string") {
+    bid = bid.toString();
+  }
+
+  return `${baseTableName}${bid.substr(0,2)}`;
+}
+
 
 /*
  * Create or update annotation
@@ -144,7 +158,7 @@ function putAnnotation(userId, bookmarkId, annotation, annotationId) {
 
         //create or replace parms
         let putParams = {
-          TableName: table,
+          TableName: getTableName(bookmarkId),
           Item: {
             "userId": userId,
             "bookmarkId": bookmarkId,
@@ -180,7 +194,7 @@ function putBookmark(userId, bookmarkId, bookmark) {
   return new Promise((resolve, reject) => {
 
     let putParams = {
-      TableName: table,
+      TableName: getTableName(bookmarkId),
       Item: {
         "userId": userId,
         "bookmarkId": bookmarkId,
@@ -218,7 +232,7 @@ function deleteBookmark(userId, bookmarkId) {
 
     //delete parms
     let deleteParams = {
-      TableName: table,
+      TableName: getTableName(bookmarkId),
       Key: {
         "userId": userId,
         "bookmarkId": bookmarkId
@@ -307,7 +321,7 @@ function query(userId, key) {
 
     //query parms
     let queryParams = {
-      TableName: table,
+      TableName: getTableName(key),
       KeyConditionExpression: "userId = :address and bookmarkId BETWEEN :start AND :end",
       ExpressionAttributeValues: {
         ":address": userId,
@@ -343,7 +357,7 @@ function getBookmark(userId, bookmarkId) {
 
     //query parms
     let getParams = {
-      TableName: table,
+      TableName: getTableName(bookmarkId),
       Key: {
         "userId": userId,
         "bookmarkId": bookmarkId
