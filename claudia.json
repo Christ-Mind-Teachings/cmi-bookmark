@@ -1,11 +1,11 @@
 {
   "lambda": {
-    "role": "cmi2-bookmark-executor",
-    "name": "cmi2-bookmark",
+    "role": "cmi2bkmrk-executor",
+    "name": "cmi2bkmrk",
     "region": "us-east-1"
   },
   "api": {
-    "id": "g2xugf4tl7",
+    "id": "rcd7l4adth",
     "module": "bin/index"
   }
 }

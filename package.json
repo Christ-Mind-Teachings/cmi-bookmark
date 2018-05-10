@@ -1,5 +1,5 @@
 {
-  "name": "cmi-bookmark",
+  "name": "cmi2bkmrk",
   "version": "1.0.0",
   "description": "",
   "main": "bin/index.js",
@@ -8,7 +8,7 @@
   ],
   "scripts": {
     "destroy": "claudia destroy",
-    "create": "npm run transpile && claudia create --name cmi2-bookmark --region us-east-1 --timeout 10 --api-module bin/index --policies policies",
+    "create": "npm run transpile && claudia create --name cmi2bkmrk --region us-east-1 --timeout 10 --api-module bin/index --policies policies",
     "update": "npm run transpile && claudia --no-optional-dependencies update",
     "transpile": "babel --presets es2015 src --out-dir bin",
     "precreate": "eslint src/**",
@@ -19,11 +19,11 @@
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-preset-es2015": "^6.24.1",
-    "claudia": "^2.10.0",
     "eslint": "^3.19.0"
   },
   "dependencies": {
-    "claudia-api-builder": "^2.4.1",
+    "claudia": "^4.0.0",
+    "claudia-api-builder": "^4.0.0",
     "lodash": "^4.17.5"
   },
   "optionalDependencies": {

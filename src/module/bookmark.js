@@ -89,9 +89,12 @@ function putAnnotation(userId, bookmarkId, annotation, annotationId) {
   return new Promise((resolve, reject) => {
     let update = false;
 
+    console.log("putAnntotation()");
+
     //get bookmark and see if it already has the new annotation
     getBookmark(userId, bookmarkId)
       .then((response) => {
+        console.log("getBookmark().then()");
         let bookmark = [];
 
         //we found a bookmark
@@ -168,6 +171,7 @@ function putAnnotation(userId, bookmarkId, annotation, annotationId) {
 
         db.put(putParams, function(err/*, data*/) {
           if (err) {
+            console.log("db.put error: params: %s", putParams);
             reject(err);
           }
           else {
@@ -181,6 +185,7 @@ function putAnnotation(userId, bookmarkId, annotation, annotationId) {
         });
       })
       .catch((err) => {
+        console.log("getBookmark db error: %s", err);
         reject(err);
       });
   });
