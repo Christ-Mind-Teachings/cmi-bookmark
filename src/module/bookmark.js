@@ -89,12 +89,9 @@ function putAnnotation(userId, bookmarkId, annotation, annotationId) {
   return new Promise((resolve, reject) => {
     let update = false;
 
-    console.log("putAnntotation()");
-
     //get bookmark and see if it already has the new annotation
     getBookmark(userId, bookmarkId)
       .then((response) => {
-        console.log("getBookmark().then()");
         let bookmark = [];
 
         //we found a bookmark
@@ -169,9 +166,13 @@ function putAnnotation(userId, bookmarkId, annotation, annotationId) {
           }
         };
 
+        //console.log("calling db.put: userId: %s, bookmarkId: %s, bookmark: %o", userId, bookmarkId, bookmark);
+        //let item = JSON.stringify(putParams);
+        //console.log(item);
+
         db.put(putParams, function(err/*, data*/) {
           if (err) {
-            console.log("db.put error: params: %s", putParams);
+            console.log("db.put error: err: %o, params: %o", err, putParams);
             reject(err);
           }
           else {

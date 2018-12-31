@@ -13,7 +13,7 @@ var awsConfig = {
 program
   .version('0.0.1')
   .option('-e, --endpoint <dblocation>', "Db location, either local or remote")
-  .option('-s, --sid <sourceId>', "Source Id: WOM = 10")
+  .option('-s, --sid <sourceId>', "Source Id: WOM=10, JSB=11")
   .parse(process.argv);
 
 if (!program.endpoint) {
@@ -22,7 +22,7 @@ if (!program.endpoint) {
 }
 
 if (!program.sid) {
-  console.log("specify sourceId as -s <sourceId>, eg: -s 10 for WOM");
+  console.log("specify sourceId as -s <sourceId>, eg: -s 10 for WOM, 11 for JSB");
   process.exit(1);
 }
 

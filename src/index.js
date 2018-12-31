@@ -25,8 +25,6 @@ api.post("/bookmark/annotation", function(request) {
     return result;
   }
 
-  console.log("putAnnotation");
-
   db.initialize(false);
 
   return db.putAnnotation(parms.userId, parms.bookmarkId, parms.annotation, parms.annotationId)

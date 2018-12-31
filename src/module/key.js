@@ -52,7 +52,8 @@ function getKeyRange(key) {
   }
 
   switch(keyString.substr(0,2)) {
-    case "10":
+    case "10": //WOM
+    case "11": //JSB
       return getWOMKeyRange(keyString);
     default:
       return {startValue: 0, endValue: 0};
