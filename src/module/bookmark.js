@@ -336,6 +336,8 @@ function query(userId, key) {
       }
     };
 
+    //console.log("query: TableName:%s, userId:%s, start: %s, end: %s", queryParams.TableName, userId, keyRange.startValue, keyRange.endValue);
+
     db.query(queryParams, function(err, data) {
       if (err) {
         reject(err);
