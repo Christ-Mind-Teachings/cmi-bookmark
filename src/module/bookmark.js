@@ -347,7 +347,11 @@ function query(userId, key) {
         let bookmarks = data.Items.map((b) => {
           return {id: b.bookmarkId, bookmark: b.bookmark};
         });
-        resolve(bookmarks);
+
+        //deleted bookmarks don't have data but they do exist as empty arrays
+        // - they get filtered from the set
+        let filtered = bookmarks.filter(b => b.bookmark.length > 0);
+        resolve(filtered);
       }
     });
   });
