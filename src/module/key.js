@@ -70,6 +70,37 @@ function getACIMKeyRange(keyString) {
   return keyRange;
 }
 
+/*
+ * RAJ key format:
+ *
+ *  key format: ssbbuuu.ppp
+ *
+ *   ss: source Id
+ *   bb: book Id
+ *  uuu: unit Id
+ *  ppp: paragraph number - not positional
+ */
+function getRAJKeyRange(keyString) {
+  const keyLength = 7; //ssbbuuu
+  let paddingLength = keyLength - keyString.length;
+  let keyRange = {startValue: 0, endValue: 0};
+
+  //expect keyString smaller than keyLength characters
+  if (paddingLength < 0) {
+    return keyRange;
+  }
+
+  let zeroPadded = new Array(paddingLength + 1).join("0");
+  let ninePadded = new Array(paddingLength + 1).join("9");
+
+  let startString = `${keyString}${zeroPadded}.000`;
+  let endString = `${keyString}${ninePadded}.999`;
+
+  keyRange.startValue = parseFloat(startString);
+  keyRange.endValue = parseFloat(endString);
+
+  return keyRange;
+}
 
 /*
  * Key represents a source or source and book and is the
@@ -89,6 +120,8 @@ function getKeyRange(key) {
       return getWOMKeyRange(keyString);
     case "12": //ACIM
       return getACIMKeyRange(keyString);
+    case "13": //RAJ
+      return getRAJKeyRange(keyString);
     default:
       return {startValue: 0, endValue: 0};
   }

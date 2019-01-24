@@ -24,7 +24,8 @@
   "dependencies": {
     "claudia": "^4.0.0",
     "claudia-api-builder": "^4.0.1",
-    "lodash": "^4.17.10"
+    "lodash": "^4.17.10",
+    "md5": "^2.2.1"
   },
   "optionalDependencies": {
     "aws-sdk": "^2.35.0"

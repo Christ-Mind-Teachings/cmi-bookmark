@@ -1,11 +1,14 @@
 const bookmark = require("../src/module/bookmark");
 const util = require("util");
+const md5 = require("md5");
 
 bookmark.initialize(true, "remote");
 
-const userId = "05399539cca9ac38db6db36f5c770ff1";
+const sourceId = "13";
+const email = "rmercer33@gmail.com";
+var userId = md5(email);;
 
-bookmark.query(userId, "123")
+bookmark.query(userId, sourceId)
   .then((list) => {
     console.log("query: ", list);
   })
