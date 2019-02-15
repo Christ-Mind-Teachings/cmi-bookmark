@@ -121,6 +121,7 @@ function getKeyRange(key) {
     case "12": //ACIM
       return getACIMKeyRange(keyString);
     case "13": //RAJ
+    case "99": //RAJ
       return getRAJKeyRange(keyString);
     default:
       return {startValue: 0, endValue: 0};

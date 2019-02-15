@@ -10,6 +10,32 @@ api.post("/request", function(request) {
   return request;
 });
 
+//share a bookmark via email
+api.post("/share", function(request) {
+  var send = require("./module/cmi/send");
+  var userrequest = require("./module/cmi/request");
+
+  var parms = userrequest.parseForSend(request);
+  if (parms.error) {
+    return parms;
+  }
+
+  return send.share(parms);
+});
+
+//share a bookmark via email
+api.post("/verify", function(request) {
+  var send = require("./module/cmi/send");
+  var userrequest = require("./module/cmi/request");
+
+  var parms = userrequest.parseForVerify(request);
+  if (parms.error) {
+    return parms;
+  }
+
+  return send.verify(parms);
+});
+
 //create or update bookmark
 api.post("/bookmark/annotation", function(request) {
   var handleRequest = require("./module/handleRequest");
