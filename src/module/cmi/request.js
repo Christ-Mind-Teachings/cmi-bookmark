@@ -61,6 +61,13 @@ function parseRequestForSend(request) {
     parms.url = userRequest.url;
   }
 
+  if (!userRequest.sid) {
+    parms.message.push("Error: 'sid' not specified");
+  }
+  else {
+    parms.sid = userRequest.sid;
+  }
+
   if (parms.message.length > 0) {
     parms.error = true;
   }

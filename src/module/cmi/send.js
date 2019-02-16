@@ -27,6 +27,7 @@ function shareQuote(parms) {
   shareBody.to = parms.to;
   shareBody.subject = `${parms.senderName} shared a quote from the Library of Christ Mind Teachings`;
   shareBody.html = template.generateEmail(parms.quote, parms.citation, parms.url);
+  shareBody["o:tag"] = [parms.sid];
 
   return new Promise((resolve, reject) => {
     send.messages().send(shareBody, (error, body) => {
