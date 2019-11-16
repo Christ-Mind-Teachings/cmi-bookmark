@@ -36,6 +36,19 @@ api.post("/verify", function(request) {
   return send.verify(parms);
 });
 
+//request full ACOL access
+api.post("/acol/access", function(request) {
+  var send = require("./module/cmi/send");
+  var userrequest = require("./module/cmi/request");
+
+  var parms = userrequest.parseForAccess(request);
+  if (parms.error) {
+    return parms;
+  }
+
+  return send.accessRequest(parms);
+});
+
 //create or update bookmark
 api.post("/bookmark/annotation", function(request) {
   var handleRequest = require("./module/handleRequest");

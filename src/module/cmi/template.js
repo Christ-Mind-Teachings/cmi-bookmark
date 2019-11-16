@@ -4,7 +4,7 @@ function buildEmail(quote, citation, url) {
 <head>
 <meta name="viewport" content="width=device-width">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Alerts e.g. approaching your limit</title>
+<title>Share from Library of Christ Mind Teachings</title>
 <style>
 @media only screen and (max-width: 640px) {
   body {

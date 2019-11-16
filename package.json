@@ -9,7 +9,8 @@
   "scripts": {
     "destroy": "claudia destroy",
     "create": "npm run transpile && claudia create --name cmi2bkmrk --region us-east-1 --timeout 10 --api-module bin/index --policies policies",
-    "update": "npm run transpile && claudia --no-optional-dependencies update",
+    "update": "npm run transpile && claudia --no-optional-dependencies update --runtime nodejs10.x",
+    "updateX": "npm run transpile && claudia --no-optional-dependencies update",
     "transpile": "babel --presets es2015 src --out-dir bin",
     "precreate": "eslint src/**",
     "preupdate": "eslint src/**"
@@ -24,7 +25,7 @@
   "dependencies": {
     "claudia": "^4.0.0",
     "claudia-api-builder": "^4.1.2",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.15",
     "mailgun-js": "^0.22.0",
     "md5": "^2.2.1"
   },

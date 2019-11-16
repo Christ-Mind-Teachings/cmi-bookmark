@@ -2,6 +2,7 @@
 
 const mg = require("./mailgun");
 const template = require("./template.js");
+const ack = require("./ack.js");
 
 const send = mg.initializeSend();
 const verify = mg.initializeVerify();
@@ -40,8 +41,26 @@ function shareQuote(parms) {
   });
 }
 
+function accessRequest(parms) {
+  shareBody.from = `${parms.senderName} <${parms.senderEmail}>`;
+  shareBody.to = parms.to;
+  shareBody.subject = `${parms.senderName} requests ACOL access`;
+  shareBody.html = ack.buildAccessRequest(parms.senderName, parms.senderEmail);
+
+  return new Promise((resolve, reject) => {
+    send.messages().send(shareBody, (error, body) => {
+      if (error) {
+        reject(error);
+        return;
+      }
+      resolve(body);
+    });
+  });
+}
+
 module.exports = {
   share: shareQuote,
+  accessRequest: accessRequest,
   verify: verifyList
 };
 
