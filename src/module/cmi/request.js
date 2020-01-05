@@ -117,6 +117,16 @@ function parseRequestForACOL(request) {
     parms.to = userRequest.to;
   }
 
+  if (!userRequest.newsletter) {
+    parms.newsletter = false;
+  }
+  else if (userRequest.newsletter === "on") {
+    parms.newsletter = true;
+  }
+  else {
+    parms.newsletter = false;
+  }
+
   if (parms.message.length > 0) {
     parms.error = true;
   }

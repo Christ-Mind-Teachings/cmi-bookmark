@@ -1,4 +1,4 @@
-function buildAccessRequest(name, email) {
+function buildAccessRequest(name, email, newsletter) {
   return `<!doctype html>
 <html>
   <head>
@@ -145,7 +145,7 @@ function buildAccessRequest(name, email) {
             <!-- END HEADER -->
 
             <table border="0" cellpadding="0" cellspacing="0" class="main" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%; background: #fff; border-radius: 4px;" width="100%">
-              
+
 <span class="preheader" style="color: transparent; display: none; height: 0; max-height: 0; max-width: 0; opacity: 0; overflow: hidden; mso-hide: all; visibility: hidden; width: 0;">ACOL Access Request</span>
 <table class="main" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%; background: #fff; border-radius: 4px;" width="100%">
   <tr>
@@ -154,8 +154,8 @@ function buildAccessRequest(name, email) {
         <tr>
           <td style="font-family: Helvetica, sans-serif; font-size: 14px; vertical-align: top;" valign="top">
             <p style="font-family: Helvetica, sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 16px;">Please grant full ACOL access to:</p>
-            <p style="font-family: Helvetica, sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 16px;">${name}</p>
-            <p style="font-family: Helvetica, sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 16px;">${email}</p>
+            <p style="font-family: Helvetica, sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 16px;">${name} at ${email}</p>
+            <p style="font-family: Helvetica, sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 16px;">Newsletter: ${newsletter}</p>
           </td>
         </tr>
       </table>

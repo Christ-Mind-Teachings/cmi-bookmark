@@ -45,7 +45,7 @@ function accessRequest(parms) {
   shareBody.from = `${parms.senderName} <${parms.senderEmail}>`;
   shareBody.to = parms.to;
   shareBody.subject = `${parms.senderName} requests ACOL access`;
-  shareBody.html = ack.buildAccessRequest(parms.senderName, parms.senderEmail);
+  shareBody.html = ack.buildAccessRequest(parms.senderName, parms.senderEmail, parms.newsletter);
 
   return new Promise((resolve, reject) => {
     send.messages().send(shareBody, (error, body) => {
