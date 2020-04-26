@@ -119,6 +119,7 @@ function getKeyRange(key) {
     case "11": //JSB
       return getWOMKeyRange(keyString);
     case "12": //ACIM
+    case "15": //ACIMOE
       return getACIMKeyRange(keyString);
     case "13": //RAJ
     case "14": //ACOL
