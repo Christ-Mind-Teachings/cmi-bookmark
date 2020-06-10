@@ -5,6 +5,39 @@
  */
 
 /*
+ * PWOM key format:
+ *
+ *  key format: ssbbuuuxx.ppp
+ *
+ *   ss: source Id
+ *   bb: book Id
+ *  uuu: unit Id
+ *   xx: subunit id
+ *  ppp: paragraph number - not positional
+ */
+function getPWOMKeyRange(keyString) {
+  const keyLength = 9; //ssbbuuuxx
+  let paddingLength = keyLength - keyString.length;
+  let keyRange = {startValue: 0, endValue: 0};
+
+  //expect keyString smaller than keyLength characters
+  if (paddingLength < 0) {
+    return keyRange;
+  }
+
+  let zeroPadded = new Array(paddingLength + 1).join("0");
+  let ninePadded = new Array(paddingLength + 1).join("9");
+
+  let startString = `${keyString}${zeroPadded}.000`;
+  let endString = `${keyString}${ninePadded}.999`;
+
+  keyRange.startValue = parseFloat(startString);
+  keyRange.endValue = parseFloat(endString);
+
+  return keyRange;
+}
+
+/*
  * WOM key format:
  *
  *  key format: ssbuuIqq.ppp
@@ -125,6 +158,8 @@ function getKeyRange(key) {
     case "14": //ACOL
     case "99": //WWW
       return getRAJKeyRange(keyString);
+    case "16": //PWOM
+      return getPWOMKeyRange(keyString);
     default:
       return {startValue: 0, endValue: 0};
   }
