@@ -68,6 +68,10 @@ function parseRequestForSend(request) {
     parms.sid = userRequest.sid;
   }
 
+  if (userRequest.message) {
+    parms.msg = userRequest.message;
+  }
+
   if (parms.message.length > 0) {
     parms.error = true;
   }

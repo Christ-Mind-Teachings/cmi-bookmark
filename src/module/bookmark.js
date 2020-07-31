@@ -69,7 +69,6 @@ function getTableName(bid) {
   return `${baseTableName}${bid.substr(0,2)}`;
 }
 
-
 /*
  * Create or update annotation
  *

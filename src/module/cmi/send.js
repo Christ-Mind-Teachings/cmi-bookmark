@@ -2,6 +2,7 @@
 
 const mg = require("./mailgun");
 const template = require("./template.js");
+const template2 = require("./template2.js");
 const ack = require("./ack.js");
 
 const send = mg.initializeSend();
@@ -27,8 +28,14 @@ function shareQuote(parms) {
   shareBody.from = `${parms.senderName} <${parms.senderEmail}>`;
   shareBody.to = parms.to;
   shareBody.subject = `${parms.senderName} shared a quote from the Library of Christ Mind Teachings`;
-  shareBody.html = template.generateEmail(parms.quote, parms.citation, parms.url);
   shareBody["o:tag"] = [parms.sid];
+
+  if (parms.msg) {
+    shareBody.html = template2.generateEmail(parms.quote, parms.citation, parms.url, parms.msg);
+  }
+  else {
+    shareBody.html = template.generateEmail(parms.quote, parms.citation, parms.url);
+  }
 
   return new Promise((resolve, reject) => {
     send.messages().send(shareBody, (error, body) => {
